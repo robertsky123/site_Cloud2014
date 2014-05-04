@@ -18,7 +18,20 @@ time, mark, audio, video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline; }
-html{overflow-y:scroll;overflow-x:hidden;}
+html{overflow:hidden;}
+html.choose_app{
+  overflow-y:scroll; 
+}
+/** 滚动条 
+*/
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-button{display:none}
+::-webkit-scrollbar-track:vertical{background-color:black}
+::-webkit-scrollbar-track-piece{background:#FFF}
+::-webkit-scrollbar-thumb{background-color:#8E8E8E;border-radius:5px}
+::-webkit-scrollbar-thumb:hover{background-color:#3B3B3B}
+::-webkit-scrollbar-corner{background-color:#535353}
+::-webkit-scrollbar-resizer{background-color:#FF6E00}
 body {
   font-size: 12px;
   line-height: 1.5;
@@ -1719,3 +1732,14 @@ color:#444!important;
 /*model page*/
 #add_as_modpag .edit_field{height:60px;}
 
+/*页面管理3Tab-ifrs-wraper*/
+.ifrs-wraper{
+  overflow: hidden;
+  widows: 100%;
+}
+.ifrs-wraper_inner,.ifrs-wraper_cell{
+  height: 100%;
+}
+.ifrs-wraper_iframe{
+  width:100%;
+}
