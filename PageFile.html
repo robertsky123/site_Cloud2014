@@ -1,0 +1,148 @@
+@{
+	ViewBag.Title = "资文件管理";
+	Layout = "~/Views/Shared/_Layout_pagemanage.cshtml";
+}
+<script src="@Url.Content("~/Scripts/jquery-jtemplates.js")" type="text/javascript"></script>
+<script src="@Url.Content("/Scripts/jquery.uploadify.js")" type="text/javascript"></script>
+<!-- 文件夹选项列表模板 -->
+<textarea id="select_opt_tmp" rows="0" cols="0" style="display: none">
+	<!--
+	{#foreach $T as item}
+	<option value="{$T.item.ClassifyId}">{$T.item.Name}</option>
+	{#/for}
+	-->
+	</textarea>
+<!-- 文件夹选项编辑列表模板 -->
+<textarea id="edit_cata_tmp" rows="0" cols="0" style="display: none">
+<!--
+<tr>
+	<th width="220">文件夹名称</th>
+	<th>操作</th>
+</tr>
+{#foreach $T as item}
+	<tr>
+		<td><div class="cata_rename_bx"><p class="cat_name">{$T.item.Name}</p><input class="cat_reinput" data-id="{$T.item.ClassifyId}" type="text" /></div></td>
+		<td><a href="" data-id="1" class="js-rename_cata">【重命名】</a> <a href="" data-id="{$T.item.ClassifyId}" class="js-delete_cata">【删除】</a></td>
+	</tr>
+{#/for}
+-->
+</textarea>
+<div id="container" class="clearfix">
+	<div id="side_bar">
+		<div class="catalog_bx">
+			<h2 class="catalog_title">上传到文件夹</h2>
+			<select id="uploade_source_type" name="uploade_source_type">
+				<option value="@((int)IBiz.Guard.FileType.Image)">图片</option>
+				<option value="@((int)IBiz.Guard.FileType.Flash)">Flash</option>
+			</select>
+			--
+			<select id="uploade_source_cata" name="uploade_source_cata">
+				<option value="-1">临时文件夹</option>
+			</select>
+		</div>
+		<a href="#" id="upload_file" class="u_btn_palcehold" name="upload_file"></a>
+		<pre class="upload_tip">上传的资源文件可以是png，</br>gif，jpg,jpeg,bmp格式的
+<br />图片以及flash文件。
+<br />
+<br />文件夹采用虚拟文件夹，请在
+<br />上传的资源（压缩包或单个文
+<br />件）中不要包含同名的文件，
+<br />同名文件会覆盖。
+			</pre>
+	</div>
+	<div id="main_content">
+		<div id="filemg_tabs">
+			<ul class="f_c_tab clearfix">
+				<li><a class="show_imgs current" data-type="@((int)IBiz.Guard.FileType.Image)" href="">图片</a></li>
+				<li><a class="flash_files" data-type="@((int)IBiz.Guard.FileType.Flash)" href="">Flash文件</a></li>
+			</ul>
+		</div>
+		<div id="soursemg_box">
+			<div class="search_bx clearfix">
+				<div class="fl condi">
+					<label for="user_tname">
+						文件名称</label><input type="text" id="user_tname" name="user_tname" class="txt" />
+				</div>
+				<div class="fl condi">
+					<label for="manufacturer_state">
+						文件夹</label><select id="source_cata_select" name="source_cata_select">
+						</select>
+				</div>
+				<div class="fl condi">
+					<a class="submit_search js-catalog_search" href="#">搜索</a>
+				</div>
+				<a href="#" class="lightbu_btn js-edit-sourcata fr">编辑文件夹</a> <a href="#" class="lightbu_btn js-add-sourcata fr">添加文件夹</a>
+			</div>
+			<div class="soursemg_cell" id="img_lists_wrap">
+			</div>
+			<div class="soursemg_cell" style="display: none;" id="file_lists_wrap">
+			</div>
+			<div id="data_page_nav">
+			</div>
+		</div>
+	</div>
+</div>
+<div id="footer">
+</div>
+<div id="add_page" title="页面信息">
+	<div class="input_box">
+		<div class="edit_field">
+			<p>
+				<span>页面名称</span><input type="text" class="page_name" />
+			</p>
+			<p>
+				<span>页面文件名</span><input type="text" class="doc_name" />
+			</p>
+		</div>
+	</div>
+	<div class="editor_bto_bat">
+		<a href="#" class="save_btn">保存</a> <a class="cancel_btn ml_20 " href="#">关闭</a>
+	</div>
+</div>
+<div id="delete_page" title="删除此页面">
+	<p class="dele_tip">
+		点击“确定”将永久删除 <span></span>页面！
+	</p>
+	<div class="editor_bto_bat">
+		<a href="#" class="save_btn">确定</a> <a class="cancel_btn ml_20 " href="#">取消</a>
+	</div>
+</div>
+<div id="edit_img_alt" title="编辑图片ALT属性">
+	<div class="input_box">
+		<div class="edit_field">
+			<p>
+				<span>ALT属性:</span><input type="text" class="input_img_alt" />
+			</p>
+		</div>
+	</div>
+	<div class="editor_bto_bat">
+		<a href="#" class="save_btn">保存</a> <a class="cancel_btn ml_20 " href="#">关闭</a>
+	</div>
+</div>
+<div id="add_sourcecata" style="display: none;" title="添加文件夹">
+	<!--添加文件夹弹出框-->
+	<form action="" class="add_sourcecata_form">
+		<div class="input_box">
+			<div class="edit_field">
+				<p>
+					<span>文件夹名称</span><input type="text" name="source_doucment_name" class="inputtxt source_doucment_name" />
+				</p>
+			</div>
+		</div>
+		<div class="editor_bto_bat">
+			<a href="#" class="save_btn">保存</a><input type="submit" value="保存" style="display: none;" />
+			<a class="cancel_btn ml_20 " href="#">关闭</a>
+		</div>
+	</form>
+</div>
+<div id="edit_sourcecata" style="display: none;" title="编辑文件夹">
+	<!--编辑文件夹弹出框-->
+	<div class="edit_field">
+		<table class="data_box" id="catalog_table" cellspacing="0" cellpadding="0" border="0">
+		</table>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function () { pagejscomm.UploadFile(); });
+</script>
+@Html.Partial("IMPart")
