@@ -1,0 +1,358 @@
+@{
+	ViewBag.Title = "页面管理";
+	Layout = "~/Views/Shared/_Layout_pagemanage.cshtml";
+}
+<script src="@Url.Content("~/Scripts/jquery-jtemplates.js")" type="text/javascript"></script>
+<div id="container" class="clearfix pag_lists">
+	<div id="side_bar">
+		<div class="sub_navi_wrap">
+			<div class="sub_navi">
+				<ul>
+					<li>
+						<h2>
+							<span title="新建页面" class="add_1 fr">新建页面</span><a class="import_test_data lightg_btn fr" href="#">导入数据</a><a title="模板页列表" class="modpge_manage lighty_btn fr" href="#">模板</a>页面列表</h2>
+						<div class="links_wrap">
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<a href="#" title="将此本版的整站拷贝到其它语言版本" class="copy_site_langue clone_site_to">拷贝网站</a>
+		<a data-href="/Home/Download?SiteId=@ViewBag.SiteId" href="#"  title="将打包此网站的所有语言版本" id="js-zip-site" class="pub_site_btn">打包下载</a>
+		@*<a href="#" target="_blank" title="将上传此网站的所有语言版本" class="pub_ftp_btn">FTP上传</a>*@
+		<a href="@ViewBag.SiteDomain/index.html" target="_blank" class="browser_site_btn">浏览站点</a>
+		<div class="js-3dimg mob3d-img">
+			<img class="" src="http://qr.liantu.com/api.php?&bg=ffffff&fg=000000&text=@ViewBag.SiteDomain/mobile/index.html" alt="">
+		</div>
+		<a href="@ViewBag.SiteDomain/AdminUsers/UserLogin" target="_blank" class="login_admin_btn">登陆后台</a>
+		<a href="javascript:;" target="_blank" title="取回已上传网站，修改，上传" class="pub_back_btn js-pubback">取回上传</a>
+		<a href="javascript:;" class="import_outdatabase js-import-databse">导入数据库</a>
+	</div>
+	<div id="main_content">
+		<div class="ct_tip_bar">
+			<a class="cre_link fr" href="/Home/Index" target="_blank">制作页面去</a><a class="del_pg_btn fr"
+				href="#" data-tip="">删除页面</a>页面信息 -- <span class="p_tip">首页</span>
+		</div>
+		<div class="act_bar">
+			<div class="act_wrap clearfix">
+				<div id="pa_editor">
+					<div class="clearfix cell">
+						<div class="fl_l lab">
+							页面名称:
+						</div>
+						<div class="suit">
+							<input class="page_name pe_txt" type="text" name="" id="" />
+						</div>
+					</div>
+					<div class="clearfix cell">
+						<div class="fl_l lab">
+							标题：
+						</div>
+						<div class="suit">
+							<input class="page_hdtitle pe_txt" type="text" name="" id="" />
+						</div>
+					</div>
+					<div class="clearfix cell">
+						<div class="fl_l lab">
+							关键字：
+						</div>
+						<div class="suit">
+							<input class="page_hdkeword pe_txt" type="text" name="" id="" />
+						</div>
+					</div>
+					<div class="clearfix cell">
+						<div class="fl_l lab">
+							描述：
+						</div>
+						<div class="suit">
+							<textarea class="page_des" type="text" name="" id=""></textarea>
+						</div>
+						<div class="clearfix cell">
+							<div class="fl_l lab">
+								&nbsp;
+							</div>
+							<div class="suit">
+								<a href="" class="save_c">保存</a>
+							</div>
+						</div>
+					</div>
+					<p class="create_tip">
+						尚未创建页面，点击“新建页面”按钮，创建页面
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+	</div>
+	<div id="import_testdata_pop" style="display: none;" title="导入测试数据">
+		<p class="announce_tip">
+			点击“确定”将导入系统默认的测试数据。<br />
+			测试数据是可以后台删除的。
+		</p>
+		<div class="editor_bto_bat">
+			<a href="#" class="save_btn">确定</a> <a class="cancel_btn ml_20 " href="#">关闭</a>
+		</div>
+	</div>
+
+	<div id="delete_testdata_pop" style="display: none;" title="删除测试数据">
+		<p class="announce_tip">
+			点击“确定”将会删除测试数据。<br />
+			点击“继续”将保留测试数据，继续刚才的操作。
+		</p>
+		<div class="editor_bto_bat">
+			<a href="#" class="save_btn">确定</a> <a class="cancel_btn ml_20 " href="#">继续</a>
+		</div>
+	</div>
+	<!-- 模板页面列表 -->
+	<textarea id="txt_shareduserlists" rows="0" cols="0" style="display: none">
+	<!--
+	
+	{#foreach $T.list as item}
+	<li class="modelpage_list clearfix">
+		<input data-id="{$T.item.Id}" class="check_mdpag fl" type="checkbox" />
+		<p class="modpg_name fl">{$T.item.Name}</p>
+		<a href="#" data-id="{$T.item.Id}" class="del_modpg fr">×</a>
+	</li>
+	{#/for}
+	-->
+	</textarea>
+	<div id="add_page" title="新建页面">
+		<div class="input_box">
+			<div class="edit_field">
+				<p>
+					<span>页面名称</span><input type="text" class="page_name" />
+				</p>
+				<p>
+					<span>页面文件名</span><input type="text" class="doc_name" />
+				</p>
+				<p>
+					<span>页面模板</span><select id="add_modepg_select"></select>
+				</p>
+				<!-- 模板页下拉选项列表 -->
+				<textarea id="add_modepg_select_temple" rows="0" cols="0" style="display: none">
+					<!--
+					{#foreach $T as item}
+					<option value="{$T.item.AliasCode}">{$T.item.Name}</option>
+					{#/for}
+					-->
+					</textarea>
+			</div>
+		</div>
+		<div class="editor_bto_bat">
+			<a href="#" class="save_btn">保存</a> <a class="cancel_btn ml_20 " href="#">关闭</a>
+		</div>
+	</div>
+	<div id="delete_page" title="删除此页面">
+		<p class="dele_tip">
+			点击“确定”将永久删除 <span></span>页面！
+		</p>
+		<div class="editor_bto_bat">
+			<a href="#" class="save_btn">确定</a> <a class="cancel_btn ml_20 " href="#">取消</a>
+		</div>
+	</div>
+	<div class="alerttip">
+		<!-- 提示框 -->
+		<div class="alert_wrap">
+		</div>
+	</div>
+	<div id="modpag_lists_pop" style="display: none;" title="模板页列表">
+		<div class="edit_field">
+			<table class="data_box" id="tb_modpag_lists" cellspacing="0" cellpadding="0" border="0">
+			</table>
+			<!-- 模板页列表 -->
+			<textarea id="modpag_lists_temple" rows="0" cols="0" style="display: none">
+<!--
+<tr><th>模板名称</th><th width="100">操作</th></tr>
+{#foreach $T as item}
+<tr><td>{$T.item.Name}</td><td><a class="del_modpg" data-alias="{$T.item.AliasCode}" href="#">【删除】</a></td></tr>
+{#/for}
+-->
+</textarea>
+		</div>
+	</div>
+	<div id="add_as_modpag" style="display: none;" title="添加为模板页">
+		<form action="" class="add_mopage_form">
+			<div class="edit_field">
+				<p>
+					<span>名称：</span><input maxlength="20" class="fmodpag_name" name="modpag_name" type="text" />
+				</p>
+				@*<p>
+				<span>简介：</span><textarea maxlength="200" class="fmodpag_sum" name="modpag_sum"></textarea>*@
+			</div>
+			<div class="editor_bto_bat">
+				<a href="#" class="save_btn">确定</a><input type="submit" style="display: none;" />
+				<a class="cancel_btn ml_20 " href="#">取消</a>
+			</div>
+		</form>
+	</div>
+	<div id="clone_site_to" style="display: none;" title="拷贝此语言版本到其它语言版本">
+		<div class="clone_lan_bx">
+			<h2 class="lan_title">请选择目标语言版本<span class="highlight_tip">(如果目标版本中有数据将被覆盖)</span></h2>
+			<ul class="js-lan_lists lan_lists clearfix">
+			</ul>
+		</div>
+		<div class="editor_bto_bat">
+			<a href="#" class="save_btn">确定</a> <a class="cancel_btn ml_20 " href="#">取消</a>
+		</div>
+	</div>
+	<div id="package-pop" style="display: none;" title="选择需要打包的站点类型">
+		<div class="package-cate-box">
+			<div class="package-cate js-package-cate">
+				<input type="checkbox" name="package-cate" class="package-selcate js-package-sc" value="@((int)SiteCloud.DataTypes.ComplieOption.CommonSite)">
+				电脑版<input type="checkbox" name="package-cate" class="package-selcate js-package-sc" value="@((int)SiteCloud.DataTypes.ComplieOption.MobileSite)">
+				手机版
+			</div>
+		</div>
+		<div class="editor_bto_bat">
+			<a href="#" class="save_btn">确定</a> <a class="cancel_btn ml_20 " href="#">取消</a>
+		</div>
+	</div>
+	<div id="ftp_release_pop" title="FTP账号">
+		<div class="ftp_release_box">
+			<div class="ftp_step_wrap clearfix">
+				<div class="ftpre_step1 ftp_step">
+					<div class="edit_field">
+						<form action="">
+							<p class="ftp_tip no_bg">如果根目录不指定，则默认为FTP上传根目录</p>
+							<p>
+								<span>IP：</span><input id="ftpIp" name="ftpIp" type="text" class="ftpIp">
+							</p>
+							<p>
+								<span>账号：</span><input id="ftpAccount" name="ftpAccount" type="text" class="ftpAccount">
+							</p>
+							<p>
+								<span>密码：</span><input id="ftpPsd" name="ftpPsd" type="text" class="ftpPsd">
+							</p>
+							<p>
+								<span>根目录：</span><input id="ftpdocument" name="ftpdocument" type="text" class="ftpdocument">
+							</p>
+							<div class="ftpcatec_box clearfix">
+								<label class="fl">站点类型：</label>
+								<div class="ftpcatec_chcs js-ftp-scate fl">
+									<input type="checkbox" name="ftp-selcate" class="ftp-selcate js-ftp-sc" value="@((int)SiteCloud.DataTypes.ComplieOption.CommonSite)">
+									电脑版<input type="checkbox" name="ftp-selcate" class="ftp-selcate js-ftp-sc" value="@((int)SiteCloud.DataTypes.ComplieOption.MobileSite)">
+									手机版<input name="forftpcat" type="text" class="visuallyhidden" />
+								</div>
+							</div>
+							<div class="bto_ftp_sumbit"><a href="" class="ftp_rel_link">上传</a></div>
+							<input type="submit" class="sumbit_ftp_input" style="display: none;" />
+						</form>
+					</div>
+				</div>
+				<div class="ftpre_step2 ftp_step">
+					<div class="ftp_step_inner">
+						<p class="ftp_tip">FTP连接成功，开始备份网站文件</p>
+						<div class="ftp_download_bx">
+							<div class="ftp_bar_bx">
+								<div class="ftp_barinner"></div>
+								<span class="num">0%</span>
+							</div>
+							<div class="ftp_success">文件备份成功</div>
+						</div>
+					</div>
+				</div>
+				<div class="ftpre_step3 ftp_step">
+					<div class="ftp_step_inner">
+						<p class="ftp_tip">开始上传网站文件</p>
+						<div class="ftp_upload_bx">
+							<div class="ftp_bar_bx">
+								<div class="ftp_barinner"></div>
+								<span class="num">0%</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="ftpre_step4 ftp_step">
+					<div class="ftp_step_inner">
+						<div class="ftp_success">
+							文件上传成功，请点击 <a class="ftp_done" href="@ViewBag.SiteDomain/home/index" target="_blank" >浏览站点		</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--导入数据库弹窗-->
+	<div class="js-database-pop database-popup" title="导入数据库">
+		<div class="databsepop_bd">
+			<h2 class="databsepop_tip">请勾选需要导入数据库的语言版本</h2>
+			<form action="/Assemble/UpdateDataBase" class="js-database-form" method="post" enctype="multipart/form-data">
+				<ul class="databsepop_lists js-datbase-lists clearfix">
+				</ul>
+				<input type="submit" class="sumit-datbase" value="">
+				<input type="hidden" name="siteId" value="@ViewBag.SiteId">
+				<input type="hidden" name="taskId" value="@Utils.WebUtils.GetParamInt("taskId")">
+			</form>
+		</div>
+		<div class="editor_bto_bat">
+			<a href="#" class="save_btn">提交</a> <a class="cancel_btn ml_20 " href="#">取消</a>
+		</div>
+	</div>
+
+	<!-- 取回上传弹框 -->
+	<div class="pub_back_pop js-pubback-pop" title="取回已上传网站，修改，上传">
+		<div class="pubback">
+			<div class="pubback_box1 js-pubback-box1">
+				<div class="pubback_actbox">
+					<div class="pubback_acts js-pubbackbx js-pubback-acts">
+						<div class="pubback_select">
+							<input class="pubback_check js-pubcheck" type="checkbox">同步图片资源（upload）文件夹
+						</div>
+						<a href="" class="bconf-btn js-pubback-getbtn">取回</a>
+						<a href="" class="bconf2-btn js-pubback-pubbtn">上传</a>
+					</div>
+					<!-- 取回的进度条 -->
+					<div class="pubback_getbackbx js-pubbackbx js-pubback-getbox">
+						<p class="loading-tip">开始取回网站文件</p>
+						<div class="loading-bar">
+							<div class="loading-bar_inner"></div>
+							<span class="loading-bar_num">0%</span>
+						</div>
+					</div>
+					<!-- 上传的进度条 -->
+					<div class="pubback_pubactbx js-pubbackbx js-pubback-pubbox">
+						<p class="loading-tip">开始上传网站文件</p>
+						<div class="loading-bar loading-bar--pub">
+							<div class="loading-bar_inner"></div>
+							<span class="loading-bar_num">0%</span>
+						</div>
+					</div>
+				</div>
+				<div class="pubback_setting">
+					<a href="javascript:;" class="pubback_setbtn js-pubback-setbtn">账户设置</a>
+				</div>
+			</div>
+			<div class="puback_box2 js-pubback-box2">
+				<div class="pubback_info">
+					<div class="edit_field">
+						<form class="js-pubaccount" action="">
+							<p>
+								<span>域名：</span><input id="puback_url" name="puback_url" value="@ViewBag.Host" type="text" class="puback_url">
+							</p>
+							<p class="pubback_flintip">
+								域名不需要加http://
+							</p>
+							<p>
+								<span>账号：</span><input id="puback_account" value="@ViewBag.SiteAccount" name="puback_account" type="text" class="puback_account">
+							</p>
+							<p>
+								<span>密码：</span><input id="pubback_psd" name="pubback_psd" type="password" class="pubback_psd">
+							</p>
+							<div class="pubback_actbar">
+								<a href="javascript:;" class="sconf-btn js-pubaccount-btn">确定</a><a href="javascript:;" class="sback-btn js-pubacback-btn">返回</a><input type="submit" class="pubback_acsumbit js-pubaccount-submit" style="display: none;" />
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var _msg_error = "@ViewBag.Message";
+		if (_msg_error)
+			alert(_msg_error);
+	</script>
+@Html.Partial("/Views/Shared/IMPart.cshtml")
+
