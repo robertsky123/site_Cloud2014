@@ -1,12 +1,22 @@
 var admin_js = {};
 $(function () {
 	(function (M) {
+		//头部tab切换，配置变量
+		M.ifrs_index=0;
+		M.ifrs_cell_w=0;
+
 		M.re_height = function () {//左侧导航和展示栏高度自适应
 			var rest_h = $("#header").outerHeight();
 			w_h = $(window).height(); w_w = $(window).width();
 			$("#side_bar").css("height", w_h - 40 - rest_h);
 			$("#main_content").css("height", w_h - 30 - rest_h);
 			$("#s_container .s_ini_left").css("height", w_h - 102);
+			//头部页面tab切换
+			M.ifrs_cell_w=w_w;
+			$(".js-ifrs").css("height", w_h-rest_h);
+			$(".js-ifrs-cell").css("width", w_w);
+			$(".js-ifrs-inner").css("width", w_w*3+100);
+			$(".js-js-ifrs-iframe1,.js-js-ifrs-iframe2").css("height", w_h-rest_h);
 		};
 		M.re_height();
 
@@ -22,6 +32,7 @@ $(function () {
 
 		M.main_navi = function () { //主导航链接地址绑定
 			var url_str = window.location.href;
+			var all_mainavis=$(".main_nav_box").find("a");
 			var manage_link = $(".main_nav_box").find("a:eq(0)");
 			var resourse_link = $(".main_nav_box").find("a:eq(1)");
 			var chmodel_link = $(".main_nav_box").find("a:eq(2)");
@@ -35,7 +46,7 @@ $(function () {
 					var c_href = c_href.replace(/Home/, "Mobile");
 				}
 				manage_link.attr("href", m_href);
-				resourse_link.attr("href", r_href).addClass("current");
+				//resourse_link.attr("href", r_href).addClass("current");
 				chmodel_link.attr("href", c_href);
 			}
 			if (url_str.indexOf("Pagemanage") > 0) {
@@ -47,7 +58,7 @@ $(function () {
 					var r_href = r_href.replace(/Home/, "Mobile");
 					var c_href = c_href.replace(/Home/, "Mobile");
 				}
-				manage_link.attr("href", m_href).addClass("current");
+				//manage_link.attr("href", m_href).addClass("current");
 				resourse_link.attr("href", r_href);
 				chmodel_link.attr("href", c_href);
 			}
@@ -62,7 +73,7 @@ $(function () {
 				}
 				manage_link.attr("href", m_href);
 				resourse_link.attr("href", r_href);
-				chmodel_link.attr("href", c_href).addClass("current");
+				//chmodel_link.attr("href", c_href).addClass("current");
 			}
 			if (M.isMobile == 10 && $(".browser_site_btn").size()) { //手机版--改变浏览网站
 				var oribhref = $(".browser_site_btn").attr("href");
@@ -78,7 +89,37 @@ $(function () {
 
 				});
 			}
+			//绑定头部tab切换事件
+			manage_link.addClass("current");
+			$(".main_nav_box").on("click","a",function(event){
+				event.preventDefault();
+				var tab_index=$(".main_nav_box a").index($(this)),
+						target_src=$(this).attr("href");
+						M.ifrs_index=tab_index;
+				all_mainavis.removeClass("current");
+				$(this).addClass("current");
+				if(!$(this).data("loaded")){//未初始化ifrmane
+					$(this).data("loaded","loaded");
+					if(tab_index!=0){
+						M.main_navi.ifs_tab(tab_index,target_src);
+					}
+					else{
+						M.main_navi.ifs_tab(tab_index);
+					}
+				}
+				else{//已经初始化ifrmae
+					M.main_navi.ifs_tab(tab_index);
+				}
+			});
 		};
+		M.main_navi.ifs_tab=function (index,target_src) {
+			$(".js-ifrs-inner").animate({"marginLeft":-(index*M.ifrs_cell_w)},300,function(){
+				if(target_src){
+					$('.js-js-ifrs-iframe'+index).attr("src",target_src);
+				}
+			});
+			
+		}
 		M.main_navi();
 
 
@@ -861,7 +902,7 @@ $(function () {
 		M.get_site_lists();
 		M.delete_site();
 		M.edit_sites();
-		$(window).resize(function () { M.re_height(); });
+		$(window).resize(function () { M.re_height(); M.main_navi.ifs_tab(M.ifrs_index); });
 
 		$("#add_page").dialog({ autoOpen: false, position: 'center', width: 350 }); //新建页面弹框
 		$("#delete_page").dialog({ autoOpen: false, position: 'center', width: 350 }); //删除页面弹框
@@ -1379,6 +1420,7 @@ $(function () {
 
 			_that.css("visibility", "visible");
 		});
+		$("#leftIMbx").xjf_posFixed({ top_gap: 160 });
 		$(window).scroll(function () {
 			$("#leftIMbx").xjf_posFixed({ top_gap: 160 });
 		});
