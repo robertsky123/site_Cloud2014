@@ -1,0 +1,95 @@
+@{
+	ViewBag.Title = "选择应用系统";
+	Layout = "~/Views/Shared/_Layout_pagemanage.cshtml";
+	List<SiteCloud.DataTypes.Classify> list = ViewBag.ClassifyList as List<SiteCloud.DataTypes.Classify>;
+	Dictionary<string, string> selectitem = ViewBag.selectitem as Dictionary<string, string>;
+}
+
+
+<script src="@Url.Content("~/Scripts/jquery-jtemplates.js")" type="text/javascript"></script>
+<div id="container" class="clearfix">
+	<div id="choose_mode">
+		<div class="app_box_wraper">
+            <div class="clearfix">
+                <a href="" class="fr" id="chek_update_ware">检查更新</a>
+			    <div class="reco_tip">
+			    	请选择应用分类下您所需要的应用，选择时仔细查看所选应用系统包含的组件的信息。
+			    </div>
+            </div>
+			<div class="choosen_tip">
+				<span class="chosen_txt">当前选择的挂件:</span>
+				@if (selectitem != null)
+	{
+		foreach (string key in selectitem.Keys)
+		{
+					<a href="#" class="app_cell" id="widget_@(key)">@selectitem[key]</a>
+		}
+	}
+			</div>
+			<ul id="app_cate" class="app_cates">
+				@if (list != null)
+	{
+		for (int i = 0; i < list.Count; i++)
+		{
+					<li class="app_cate">
+						<div class="cate_hd">
+							<h2 class="cate_title">
+								@list[i].Name</h2>
+							<span class="show_arrow"></span>
+						</div>
+						<ul class="app_blists" id="list_@(list[i].ClassId)">
+						</ul>
+					</li>
+		}
+	}
+			</ul>
+		</div>
+	</div>
+</div>
+<div id="pop_chkupdate_ware" title="挂件更新检查">
+    <div class="contxt">
+		<div class="upadete_ishaveversion">
+			<div class="update_ware_box">
+			
+			</div>
+			<div class="update_wiget_box">
+			
+			</div>
+		</div>
+        <p class="no_refreash_tip"></p>
+        <a href="" class="lig_blu" id="Update_System_btn">更新</a>
+    </div>
+</div>
+<!-- Templates -->
+<textarea id="txt_template" rows="0" cols="0" style="display: none">
+<!--
+<li class="app_blist">
+{#foreach $T.list as item}
+<div class="app_bhd"><h3 class="cate_title">{$T.item.WareName}</h3></div>
+<div class="app_bbd"><div class="app_line clearfix"><div class="fl tip">介绍：</div><div class="auo_cell"><p class="sum">{$T.item.WareContent}</p></div></div>
+<div class="app_line clearfix"><div class="fl tip">挂件：</div><div class="auo_cell">
+<div class="select_app_actbar"><input type="checkbox" class="selectall_wiget_chk" style="vertical-align:-2px;"> <span class="sum" >全选</span></div>
+<ul class="model_cates">
+<li class="smodel_cate">
+<ul class="models_lists clearfix">
+{#foreach $T.item.widget as widget}
+<li {#if ($T.widget.Selected)} class="enabled"{#/if}><a class="mode_link" data-title="{$T.widget.Description}" href="/content/widgetIcon/{$T.widget.IconFileName}">
+<img src="/content/widgetIcon/{$T.widget.IconFileName}" alt="" /></a>
+<div class="mo_name">
+<p class="action clearfix"><a href="" wid="{$T.widget.WidgetId}" title="自定义挂件" class="cre_nmodel fr"></a><a href="" wid="{$T.widget.WidgetId}" class="enable_model {#if ($T.widget.Selected)} disable_model{#/if} fl" title="{#if ($T.widget.Selected)}禁选挂件{#else}选中挂件{#/if}"></a></p>
+<p class="model_sname">{$T.widget.Name}</p></div></li>
+{#/for}
+</ul>
+</li>
+</ul></div></div></div>
+{#/for}
+</li>
+-->
+</textarea>
+<script type="text/javascript">
+	$(document).ready(function () {
+		admin_js.model_choose();
+		admin_js.add_app_icon();
+	});
+</script>
+	@Html.Partial("IMPart")
