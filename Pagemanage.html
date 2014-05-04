@@ -3,86 +3,102 @@
 	Layout = "~/Views/Shared/_Layout_pagemanage.cshtml";
 }
 <script src="@Url.Content("~/Scripts/jquery-jtemplates.js")" type="text/javascript"></script>
-<div id="container" class="clearfix pag_lists">
-	<div id="side_bar">
-		<div class="sub_navi_wrap">
-			<div class="sub_navi">
-				<ul>
-					<li>
-						<h2>
-							<span title="新建页面" class="add_1 fr">新建页面</span><a class="import_test_data lightg_btn fr" href="#">导入数据</a><a title="模板页列表" class="modpge_manage lighty_btn fr" href="#">模板</a>页面列表</h2>
-						<div class="links_wrap">
-						</div>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<a href="#" title="将此本版的整站拷贝到其它语言版本" class="copy_site_langue clone_site_to">拷贝网站</a>
-		<a data-href="/Home/Download?SiteId=@ViewBag.SiteId" href="#"  title="将打包此网站的所有语言版本" id="js-zip-site" class="pub_site_btn">打包下载</a>
-		@*<a href="#" target="_blank" title="将上传此网站的所有语言版本" class="pub_ftp_btn">FTP上传</a>*@
-		<a href="@ViewBag.SiteDomain/index.html" target="_blank" class="browser_site_btn">浏览站点</a>
-		<div class="js-3dimg mob3d-img">
-			<img class="" src="http://qr.liantu.com/api.php?&bg=ffffff&fg=000000&text=@ViewBag.SiteDomain/mobile/index.html" alt="">
-		</div>
-		<a href="@ViewBag.SiteDomain/AdminUsers/UserLogin" target="_blank" class="login_admin_btn">登陆后台</a>
-		<a href="javascript:;" target="_blank" title="取回已上传网站，修改，上传" class="pub_back_btn js-pubback">取回上传</a>
-		<a href="javascript:;" class="import_outdatabase js-import-databse">导入数据库</a>
-	</div>
-	<div id="main_content">
-		<div class="ct_tip_bar">
-			<a class="cre_link fr" href="/Home/Index" target="_blank">制作页面去</a><a class="del_pg_btn fr"
-				href="#" data-tip="">删除页面</a>页面信息 -- <span class="p_tip">首页</span>
-		</div>
-		<div class="act_bar">
-			<div class="act_wrap clearfix">
-				<div id="pa_editor">
-					<div class="clearfix cell">
-						<div class="fl_l lab">
-							页面名称:
-						</div>
-						<div class="suit">
-							<input class="page_name pe_txt" type="text" name="" id="" />
+<div class='ifrs-wraper js-ifrs'>
+	<div class="ifrs-wraper_inner clearfix js-ifrs-inner">
+		<!-- 页面管理Tab1 -->
+		<div class="ifrs-wraper_cell fl js-ifrs-cell">
+			<div id="container" class="clearfix pag_lists">
+				<div id="side_bar">
+					<div class="sub_navi_wrap">
+						<div class="sub_navi">
+							<ul>
+								<li>
+									<h2>
+										<span title="新建页面" class="add_1 fr">新建页面</span><a class="import_test_data lightg_btn fr" href="#">导入数据</a><a title="模板页列表" class="modpge_manage lighty_btn fr" href="#">模板</a>页面列表</h2>
+									<div class="links_wrap">
+									</div>
+								</li>
+							</ul>
 						</div>
 					</div>
-					<div class="clearfix cell">
-						<div class="fl_l lab">
-							标题：
-						</div>
-						<div class="suit">
-							<input class="page_hdtitle pe_txt" type="text" name="" id="" />
-						</div>
+					<a href="#" title="将此本版的整站拷贝到其它语言版本" class="copy_site_langue clone_site_to">拷贝网站</a>
+					<a data-href="/Home/Download?SiteId=@ViewBag.SiteId" href="#"  title="将打包此网站的所有语言版本" id="js-zip-site" class="pub_site_btn">打包下载</a>
+					@*<a href="#" target="_blank" title="将上传此网站的所有语言版本" class="pub_ftp_btn">FTP上传</a>*@
+					<a href="@ViewBag.SiteDomain/index.html" target="_blank" class="browser_site_btn">浏览站点</a>
+					<div class="js-3dimg mob3d-img">
+						<img class="" src="http://qr.liantu.com/api.php?&bg=ffffff&fg=000000&text=@ViewBag.SiteDomain/mobile/index.html" alt="">
 					</div>
-					<div class="clearfix cell">
-						<div class="fl_l lab">
-							关键字：
-						</div>
-						<div class="suit">
-							<input class="page_hdkeword pe_txt" type="text" name="" id="" />
-						</div>
+					<a href="@ViewBag.SiteDomain/AdminUsers/UserLogin" target="_blank" class="login_admin_btn">登陆后台</a>
+					<a href="javascript:;" target="_blank" title="取回已上传网站，修改，上传" class="pub_back_btn js-pubback">取回上传</a>
+					<a href="javascript:;" class="import_outdatabase js-import-databse">导入数据库</a>
+				</div>
+				<div id="main_content">
+					<div class="ct_tip_bar">
+						<a class="cre_link fr" href="/Home/Index" target="_blank">制作页面去</a><a class="del_pg_btn fr"
+							href="#" data-tip="">删除页面</a>页面信息 -- <span class="p_tip">首页</span>
 					</div>
-					<div class="clearfix cell">
-						<div class="fl_l lab">
-							描述：
-						</div>
-						<div class="suit">
-							<textarea class="page_des" type="text" name="" id=""></textarea>
-						</div>
-						<div class="clearfix cell">
-							<div class="fl_l lab">
-								&nbsp;
+					<div class="act_bar">
+						<div class="act_wrap clearfix">
+							<div id="pa_editor">
+								<div class="clearfix cell">
+									<div class="fl_l lab">
+										页面名称:
+									</div>
+									<div class="suit">
+										<input class="page_name pe_txt" type="text" name="" id="" />
+									</div>
+								</div>
+								<div class="clearfix cell">
+									<div class="fl_l lab">
+										标题：
+									</div>
+									<div class="suit">
+										<input class="page_hdtitle pe_txt" type="text" name="" id="" />
+									</div>
+								</div>
+								<div class="clearfix cell">
+									<div class="fl_l lab">
+										关键字：
+									</div>
+									<div class="suit">
+										<input class="page_hdkeword pe_txt" type="text" name="" id="" />
+									</div>
+								</div>
+								<div class="clearfix cell">
+									<div class="fl_l lab">
+										描述：
+									</div>
+									<div class="suit">
+										<textarea class="page_des" type="text" name="" id=""></textarea>
+									</div>
+									<div class="clearfix cell">
+										<div class="fl_l lab">
+											&nbsp;
+										</div>
+										<div class="suit">
+											<a href="" class="save_c">保存</a>
+										</div>
+									</div>
+								</div>
+								<p class="create_tip">
+									尚未创建页面，点击“新建页面”按钮，创建页面
+								</p>
 							</div>
-							<div class="suit">
-								<a href="" class="save_c">保存</a>
-							</div>
 						</div>
 					</div>
-					<p class="create_tip">
-						尚未创建页面，点击“新建页面”按钮，创建页面
-					</p>
 				</div>
 			</div>
 		</div>
+		<!-- 资源文件管理Tab2 -->
+		<div class="ifrs-wraper_cell fl js-ifrs-cell">
+			<iframe src="" frameborder="0" class="ifrs-wraper_iframe js-ifrs-iframe js-js-ifrs-iframe1"></iframe>
+		</div>
+		<!-- 应用系统选择Tab3 -->
+		<div class="ifrs-wraper_cell fl js-ifrs-cell">
+			<iframe src="" frameborder="0" class="ifrs-wraper_iframe js-ifrs-iframe js-js-ifrs-iframe2"></iframe>
+		</div>
 	</div>
+</div>
 	<div id="footer">
 	</div>
 	<div id="import_testdata_pop" style="display: none;" title="导入测试数据">
