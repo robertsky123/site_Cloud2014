@@ -3,10 +3,27 @@
 	Layout = "~/Views/Shared/_Layout_pagemanage.cshtml";
 }
 <script src="@Url.Content("~/Scripts/jquery-jtemplates.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/spin.min.js")" type="text/javascript"></script>
+<!-- iframe加载进度 -->
+<div class="iframe-loading js-iframe-loading">
+	<span id="trans_loader"></span>
+</div>
 <div class='ifrs-wraper js-ifrs'>
 	<div class="ifrs-wraper_inner clearfix js-ifrs-inner">
 		<!-- 页面管理Tab1 -->
 		<div class="ifrs-wraper_cell fl js-ifrs-cell">
+			<!-- 工具栏 -->
+			<div class="factory-bar js-fac-bar">
+				<div class="factory-bar_inner clearfix">
+					<a href="javascript:void;" class="fabtn-page fabtn fl"><i class="faicon-pages faicon"></i><span class="fabtn_txt">页面</span></a>
+					<div class="fabtn-group fabtn-group--models fl">
+						<a href="javascript:void;" class="fabtn-page fabtn fabtn-group_rl fl"><i class="faicon-pages faicon"></i><span class="fabtn_txt">新建</span></a>
+						<a href="javascript:void;" class="fabtn-page fabtn fabtn-group_rl fl"><i class="faicon-pages faicon"></i><span class="fabtn_txt">全局</span></a>
+						<a href="javascript:void;" class="fabtn-page fabtn fl"><i class="faicon-pages faicon"></i><span class="fabtn_txt">复用</span></a>
+					</div>
+				</div>
+			</div>
+
 			<div id="container" class="clearfix pag_lists">
 				<div id="side_bar">
 					<div class="sub_navi_wrap">
@@ -91,11 +108,25 @@
 		</div>
 		<!-- 资源文件管理Tab2 -->
 		<div class="ifrs-wraper_cell fl js-ifrs-cell">
-			<iframe src="" frameborder="0" class="ifrs-wraper_iframe js-ifrs-iframe js-js-ifrs-iframe1"></iframe>
+			<!-- 工具栏 -->
+			<div class="factory-bar">
+				<div class="factory-bar_inner clearfix">
+					<a href="javascript:void;" class="fabtn-page fabtn fl js-back-ifr1"><i class="faicon-pages faicon"></i><span class="fabtn_txt">返回</span></a>
+					<a href="javascript:void;" class="fabtn-page fabtn fr js-refresh-ifr2"><i class="faicon-pages faicon"></i><span class="fabtn_txt">刷新</span></a>
+				</div>
+			</div>
+			<iframe src="" frameborder="0" id="js-ifrs-iframe2" class="ifrs-wraper_iframe js-ifrs-iframe js-js-ifrs-iframe1"></iframe>
 		</div>
 		<!-- 应用系统选择Tab3 -->
 		<div class="ifrs-wraper_cell fl js-ifrs-cell">
-			<iframe src="" frameborder="0" class="ifrs-wraper_iframe js-ifrs-iframe js-js-ifrs-iframe2"></iframe>
+			<!-- 工具栏 -->
+			<div class="factory-bar">
+				<div class="factory-bar_inner clearfix">
+					<a href="javascript:void;" class="fabtn-page fabtn fl js-back-ifr1"><i class="faicon-pages faicon"></i><span class="fabtn_txt">返回</span></a>
+					<a href="javascript:void;" class="fabtn-page fabtn fr js-refresh-ifr3"><i class="faicon-pages faicon"></i><span class="fabtn_txt">刷新</span></a>
+				</div>
+			</div>
+			<iframe src="" frameborder="0" id="js-ifrs-iframe3" class="ifrs-wraper_iframe js-ifrs-iframe js-js-ifrs-iframe2"></iframe>
 		</div>
 	</div>
 </div>

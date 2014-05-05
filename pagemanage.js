@@ -16,7 +16,7 @@ $(function () {
 			$(".js-ifrs").css("height", w_h-rest_h);
 			$(".js-ifrs-cell").css("width", w_w);
 			$(".js-ifrs-inner").css("width", w_w*3+100);
-			$(".js-js-ifrs-iframe1,.js-js-ifrs-iframe2").css("height", w_h-rest_h);
+			$(".js-js-ifrs-iframe1,.js-js-ifrs-iframe2").css("height", w_h-rest_h-$('.js-fac-bar').outerHeight());
 		};
 		M.re_height();
 
@@ -31,8 +31,8 @@ $(function () {
 
 
 		M.main_navi = function () { //主导航链接地址绑定
-			var url_str = window.location.href;
-			var all_mainavis=$(".main_nav_box").find("a");
+			var url_str = window.location.href.replace(/#/g,'');
+			M.all_mainavis=$(".main_nav_box").find("a");
 			var manage_link = $(".main_nav_box").find("a:eq(0)");
 			var resourse_link = $(".main_nav_box").find("a:eq(1)");
 			var chmodel_link = $(".main_nav_box").find("a:eq(2)");
@@ -96,8 +96,6 @@ $(function () {
 				var tab_index=$(".main_nav_box a").index($(this)),
 						target_src=$(this).attr("href");
 						M.ifrs_index=tab_index;
-				all_mainavis.removeClass("current");
-				$(this).addClass("current");
 				if(!$(this).data("loaded")){//未初始化ifrmane
 					$(this).data("loaded","loaded");
 					if(tab_index!=0){
@@ -114,14 +112,119 @@ $(function () {
 		};
 		M.main_navi.ifs_tab=function (index,target_src) {
 			$(".js-ifrs-inner").animate({"marginLeft":-(index*M.ifrs_cell_w)},300,function(){
+				M.all_mainavis.removeClass("current");
+				$('.main_nav_box a:eq('+index+')').addClass("current");
 				if(target_src){
-					$('.js-js-ifrs-iframe'+index).attr("src",target_src);
+					var iframe_target=$('.js-js-ifrs-iframe'+index)
+					M.iframe_loader.show();
+					iframe_target.off("load");
+					iframe_target.on("load",function(){
+						M.iframe_loader.hide()
+					});
+					iframe_target.attr("src",target_src);
 				}
 			});
 			
 		}
 		M.main_navi();
 
+		/*工具栏2,3操作*/
+		M.simplebar=(function(){ 
+			function init(){
+				$(".js-back-ifr1").click(function(event){
+					event.preventDefault();
+					M.main_navi.ifs_tab(0);
+				});
+				$('.js-refresh-ifr2').click(function(event){
+					event.preventDefault();
+					var iframe2 = document.getElementById("js-ifrs-iframe2"),
+						iframeDoc = $(iframe2),
+						origin_src=iframeDoc.attr("src");
+						M.iframe_loader.show();
+						iframeDoc.off("load");
+						iframeDoc.on("load",function(){
+							M.iframe_loader.hide()
+						});
+					iframeDoc.attr("src","").attr("src",origin_src);
+				});
+				$('.js-refresh-ifr3').click(function(event){
+					event.preventDefault();
+					var iframe3 = document.getElementById("js-ifrs-iframe3"),
+						iframeDoc = $(iframe3),
+						origin_src=iframeDoc.attr("src");
+						M.iframe_loader.show();
+						iframeDoc.off("load");
+						iframeDoc.on("load",function(){
+							M.iframe_loader.hide()
+						});
+					iframeDoc.attr("src","").attr("src",origin_src);
+				});
+			}
+			return {
+				init:init
+			};
+		})();
+		M.simplebar.init();
+		/*初始化透明加载进度花*/
+		M.png24_spinner=(function(){
+			var spinner_target,
+				spinner;
+			function init(){
+				var opts = {
+				  lines: 9, // The number of lines to draw
+				  length: 12, // The length of each line
+				  width: 7, // The line thickness
+				  radius: 15, // The radius of the inner circle
+				  corners: 1, // Corner roundness (0..1)
+				  rotate: 0, // The rotation offset
+				  direction: 1, // 1: clockwise, -1: counterclockwise
+				  color: '#00a4e1', // #rgb or #rrggbb or array of colors
+				  speed: 1, // Rounds per second
+				  trail: 60, // Afterglow percentage
+				  shadow: false, // Whether to render a shadow
+				  hwaccel: false, // Whether to use hardware acceleration
+				  className: 'spinner', // The CSS class to assign to the spinner
+				  zIndex: 2e9, // The z-index (defaults to 2000000000)
+				  top: '30%', // Top position relative to parent
+				  left: '50%' // Left position relative to parent
+				};
+				spinner_target = document.getElementById('trans_loader');
+				spinner= new Spinner(opts);
+			};
+			
+			function stop(){
+				spinner.stop();
+			}
+			
+			function use () {
+				spinner.spin(spinner_target);
+			}
+
+			return {
+				init:init,
+				stop:stop,
+				use:use
+			};
+		})();
+		if($(".js-iframe-loading").size()){
+			M.png24_spinner.init();
+		}
+		/*iframe加载遮罩层*/
+		M.iframe_loader=(function(){
+			function show(){
+				$(".js-iframe-loading").show();
+				M.png24_spinner.use();
+			}
+
+			function hide(){
+				$(".js-iframe-loading").hide();
+				M.png24_spinner.stop();
+			}
+			return {
+				show:show,
+				hide:hide
+			}
+		})();
 
 		M.l_link_act = function () {//左侧导航点击，右侧获得对应的修改信息
 			$(".links_wrap").find('.page_altlink').each(function () {
