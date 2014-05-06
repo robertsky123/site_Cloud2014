@@ -4,19 +4,28 @@ $(function () {
 		//头部tab切换，配置变量
 		M.ifrs_index=0;
 		M.ifrs_cell_w=0;
+		M.app_page=$(".js-iframe-loading").size();
 
 		M.re_height = function () {//左侧导航和展示栏高度自适应
-			var rest_h = $("#header").outerHeight();
-			w_h = $(window).height(); w_w = $(window).width();
-			$("#side_bar").css("height", w_h - 40 - rest_h);
-			$("#main_content").css("height", w_h - 30 - rest_h);
+			var rest_h = $("#header").outerHeight(),
+				w_h = $(window).height(),
+				w_w = $(window).width(),
+				fac_bar_h=$('.js-fac-bar').outerHeight();
+			if (M.app_page) {
+				$("#side_bar").css("height", w_h - 40 - rest_h - fac_bar_h);
+				$("#main_content").css("height", w_h - 30 - rest_h - fac_bar_h);
+			}
+			else{
+				$("#side_bar").css("height", w_h - 40 - rest_h);
+				$("#main_content").css("height", w_h - 30 - rest_h);
+			}
 			$("#s_container .s_ini_left").css("height", w_h - 102);
 			//头部页面tab切换
 			M.ifrs_cell_w=w_w;
 			$(".js-ifrs").css("height", w_h-rest_h);
 			$(".js-ifrs-cell").css("width", w_w);
 			$(".js-ifrs-inner").css("width", w_w*3+100);
-			$(".js-js-ifrs-iframe1,.js-js-ifrs-iframe2").css("height", w_h-rest_h-$('.js-fac-bar').outerHeight());
+			$(".js-js-ifrs-iframe1,.js-js-ifrs-iframe2").css("height", w_h-rest_h-fac_bar_h);
 		};
 		M.re_height();
 
@@ -206,7 +215,7 @@ $(function () {
 				use:use
 			};
 		})();
-		if($(".js-iframe-loading").size()){
+		if(M.app_page){
 			M.png24_spinner.init();
 		}
 		/*iframe加载遮罩层*/
@@ -225,6 +234,42 @@ $(function () {
 				hide:hide
 			}
 		})();
+
+
+		/*tab1 操作栏按钮事件*/
+		//页面-操作
+		M.acts_pages=(function(){
+			var state=0,
+				act_btn=$(".js-edit-pages");
+			function show(){
+				act_btn.addClass("fabtn-active1");
+				$(".js-pages-acts").animate({"top":51},300);
+			};
+			function hide(){
+				act_btn.removeClass("fabtn-active1");
+				$(".js-pages-acts").animate({"top":"-100%"},300);
+			}
+			function init(){
+				act_btn.click(function(event){
+					event.preventDefault();
+					if(!state){
+						state=1;
+						show();
+					}
+					else{
+						state=0;
+						hide();
+					}
+
+				});
+			}
+			return {
+				init:init
+			}
+		})();
+		M.acts_pages.init();
+
+
 
 		M.l_link_act = function () {//左侧导航点击，右侧获得对应的修改信息
 			$(".links_wrap").find('.page_altlink').each(function () {
@@ -281,7 +326,7 @@ $(function () {
 			}
 		};
 		M.ger_page_lists = function () {//获得站点的页面列表
-			if ($("#container").hasClass("pag_lists")) {
+			if (M.app_page) {
 				var br_link = window.location;
 				var site_id = Tools.GetParamSiteId(br_link);
 				var pg_list = Tools.GetPageList(parseInt(site_id));
