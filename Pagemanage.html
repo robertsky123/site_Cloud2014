@@ -4,6 +4,9 @@
 }
 <script src="@Url.Content("~/Scripts/jquery-jtemplates.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/spin.min.js")" type="text/javascript"></script>
+
+<!-- 模拟数据 -->
+<script src="@Url.Content("~/Content/testdata/jquery.mockjax.js")" type="text/javascript"></script>
 <!-- iframe加载进度 -->
 <div class="iframe-loading js-iframe-loading">
 	<span id="trans_loader"></span>
@@ -15,25 +18,25 @@
 			<!-- 工具栏 -->
 			<div class="factory-bar js-fac-bar">
 				<div class="factory-bar_inner clearfix">
-					<a href="javascript:void;" class="fabtn-page fabtn fl js-edit-pages"><i class="faicon-pages faicon"></i><span class="fabtn_txt">页面</span></a>
+					<a href="javascript:;" class="fabtn-page fabtn fl js-edit-pages"><i class="faicon-pages faicon"></i><span class="fabtn_txt">页面</span></a>
 					<div class="fabtn-group fabtn-group--models fl">
-						<a href="javascript:void;" class="fabtn-snewmod fabtn fabtn-group_rl fl"><i class="faicon-snewmod faicon"></i><span class="fabtn_txt">新建</span></a>
-						<a href="javascript:void;" class="fabtn-sgmod fabtn fabtn-group_rl fl"><i class="faicon-sgmod faicon"></i><span class="fabtn_txt">全局</span></a>
-						<a href="javascript:void;" class="fabtn-srmod fabtn fl"><i class="faicon-srmod faicon"></i><span class="fabtn_txt">复用</span></a>
+						<a href="javascript:;" class="fabtn-snewmod fabtn fabtn-group_rl fl"><i class="faicon-snewmod faicon"></i><span class="fabtn_txt">新建</span></a>
+						<a href="javascript:;" class="fabtn-sgmod fabtn fabtn-group_rl fl"><i class="faicon-sgmod faicon"></i><span class="fabtn_txt">全局</span></a>
+						<a href="javascript:;" class="fabtn-srmod fabtn fl"><i class="faicon-srmod faicon"></i><span class="fabtn_txt">复用</span></a>
 					</div>
 					<div class="fabtn-group fabtn-group--resouces fl">
-						<a href="javascript:void;" class="fabtn-simg fabtn fabtn-group_rl fl"><i class="faicon-simg faicon"></i><span class="fabtn_txt">图片</span></a>
-						<a href="javascript:void;" class="fabtn-sflash fabtn fl"><i class="faicon-sflash faicon"></i><span class="fabtn_txt">Flash</span></a>
+						<a href="javascript:;" class="fabtn-simg fabtn fabtn-group_rl fl"><i class="faicon-simg faicon"></i><span class="fabtn_txt">图片</span></a>
+						<a href="javascript:;" class="fabtn-sflash fabtn fl"><i class="faicon-sflash faicon"></i><span class="fabtn_txt">Flash</span></a>
 					</div>
 					<div class="fabtn-group fabtn-group--frame fl">
-						<a href="javascript:void;" class="fabtn-sframe fabtn fabtn-group_rl fl"><i class="faicon-sframe faicon"></i><span class="fabtn_txt">框架</span></a>
-						<a href="javascript:void;" class="fabtn-sglstye fabtn fl"><i class="faicon-sglstye faicon"></i><span class="fabtn_txt">全局样式</span></a>
+						<a href="javascript:;" class="fabtn-sframe fabtn fabtn-group_rl fl"><i class="faicon-sframe faicon"></i><span class="fabtn_txt">框架</span></a>
+						<a href="javascript:;" class="fabtn-sglstye fabtn fl"><i class="faicon-sglstye faicon"></i><span class="fabtn_txt">全局样式</span></a>
 					</div>
 					<div class="fabtn-group fabtn-group--acts fl">
-						<a href="javascript:void;" class="fabtn-sreview fabtn fabtn-green fabtn-group_rl fl"><i class="faicon-sreview faicon"></i><span class="fabtn_txt">预览</span></a>
-						<a href="javascript:void;" class="fabtn-ssave fabtn fabtn-blue fabtn-group_rc  fl"><i class="faicon-ssave faicon"></i><span class="fabtn_txt">保存</span></a>
+						<a href="javascript:;" class="fabtn-sreview fabtn fabtn-green fabtn-group_rl fl"><i class="faicon-sreview faicon"></i><span class="fabtn_txt">预览</span></a>
+						<a href="javascript:;" class="fabtn-ssave fabtn fabtn-blue fabtn-group_rc  fl"><i class="faicon-ssave faicon"></i><span class="fabtn_txt">保存</span></a>
 					</div>
-					<a href="javascript:void;" class="fabtn-srefresh fabtn fr"><i class="faicon-srefresh faicon"></i><span class="fabtn_txt">刷新</span></a>
+					<a href="javascript:;" class="fabtn-srefresh fabtn fr"><i class="faicon-srefresh faicon"></i><span class="fabtn_txt">刷新</span></a>
 				</div>
 			</div>
 
@@ -126,8 +129,8 @@
 			<!-- 工具栏 -->
 			<div class="factory-bar">
 				<div class="factory-bar_inner clearfix">
-					<a href="javascript:void;" class="fabtn-sback fabtn fl js-back-ifr1"><i class="faicon-sback faicon"></i><span class="fabtn_txt">返回</span></a>
-					<a href="javascript:void;" class="fabtn-srefresh fabtn fr js-refresh-ifr2"><i class="faicon-srefresh faicon"></i><span class="fabtn_txt">刷新</span></a>
+					<a href="javascript:;" class="fabtn-sback fabtn fl js-back-ifr1"><i class="faicon-sback faicon"></i><span class="fabtn_txt">返回</span></a>
+					<a href="javascript:;" class="fabtn-srefresh fabtn fr js-refresh-ifr2"><i class="faicon-srefresh faicon"></i><span class="fabtn_txt">刷新</span></a>
 				</div>
 			</div>
 			<iframe src="" frameborder="0" id="js-ifrs-iframe2" class="ifrs-wraper_iframe js-ifrs-iframe js-js-ifrs-iframe1"></iframe>
@@ -137,8 +140,8 @@
 			<!-- 工具栏 -->
 			<div class="factory-bar">
 				<div class="factory-bar_inner clearfix">
-					<a href="javascript:void;" class="fabtn-sback fabtn fl js-back-ifr1"><i class="faicon-sback faicon"></i><span class="fabtn_txt">返回</span></a>
-					<a href="javascript:void;" class="fabtn-srefresh fabtn fr js-refresh-ifr3"><i class="faicon-srefresh faicon"></i><span class="fabtn_txt">刷新</span></a>
+					<a href="javascript:;" class="fabtn-sback fabtn fl js-back-ifr1"><i class="faicon-sback faicon"></i><span class="fabtn_txt">返回</span></a>
+					<a href="javascript:;" class="fabtn-srefresh fabtn fr js-refresh-ifr3"><i class="faicon-srefresh faicon"></i><span class="fabtn_txt">刷新</span></a>
 				</div>
 			</div>
 			<iframe src="" frameborder="0" id="js-ifrs-iframe3" class="ifrs-wraper_iframe js-ifrs-iframe js-js-ifrs-iframe2"></iframe>
@@ -188,9 +191,6 @@
 				<p>
 					<span>页面文件名</span><input type="text" class="doc_name" />
 				</p>
-				<p>
-					<span>页面模板</span><select id="add_modepg_select"></select>
-				</p>
 				<!-- 模板页下拉选项列表 -->
 				<textarea id="add_modepg_select_temple" rows="0" cols="0" style="display: none">
 					<!--
@@ -199,6 +199,35 @@
 					{#/for}
 					-->
 					</textarea>
+			</div>
+			<div class="choose-modelpages">
+				<div class="page_hd clearfix">
+					<span class="l_tip fl">页面模板</span>
+					<div class="page_sels suit">
+						<div class="page_seltype clearfix">
+							<select id="add_modepg_select" class="fl"></select>
+							<select id="js_site_pgtemp" class="fl site_pgtemp"></select>
+						</div>
+						<div class="syspages">
+							<ul id="js-syspages-thumb" class="thumb1-lists clearfix">
+								
+							</ul>
+						</div>
+						<!-- 系统通用模板页缩率图列表 -->
+						<textarea id="js-syspage-template" rows="0" cols="0" style="display: none">
+							<!--
+							{#foreach $T as item}
+							<li class="thumb1-lists_cell">
+								<div class="thumb1-lists_img"><img src="{$T.item.src}" alt=""></div>
+								<div class="thumb1-lists_info">
+									<input class="thumb1-lists_sel" type="radio" name="syspages" value="{$T.item.id}" id=""><span class="thumb1-lists_name">{$T.item.name}</span>
+								</div>
+							</li>
+							{#/for}						
+							-->
+						</textarea>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="editor_bto_bat">

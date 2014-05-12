@@ -18,7 +18,7 @@ time, mark, audio, video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline; }
-html{overflow:hidden;}
+html{overflow-x:hidden;overflow-y:auto;}
 html.choose_app{
   overflow-y:scroll; 
 }
@@ -1417,8 +1417,69 @@ vertical-align:middle;
   color:#666;
   line-height:2;
   }
-/*Ä£°åÒ³ÃæÁÐ±í*/
-#add_page .edit_field{padding:10px 10px 0;}
+/*添加页面*/
+#add_page .edit_field{padding:20px 10px 0;}
+#add_page .input_box{
+  min-height: 200px;
+}
+#add_page .edit_field span{
+  height: 26px;
+  line-height: 26px;
+}
+#add_page .edit_field p{
+  border-bottom: 1px dashed #dfdfdf;
+  padding:5px 0;
+}
+#add_page .edit_field input{
+  margin-left:10px;
+}
+/*添加页面-模板页列表*/
+.choose-modelpages{
+  padding:0 10px;
+}
+.choose-modelpages .l_tip{
+  width:70px;
+  text-align: right;
+  height: 26px;
+  line-height: 26px;
+}
+.choose-modelpages .page_sels{
+  padding-left:10px;
+}
+/*thumb1-lists*/
+#add_page .thumb1-lists{
+  padding:10px 0;
+}
+.thumb1-lists_cell{
+ float: left;
+ width: 100px;
+ margin:0 10px 10px 0;
+ overflow: hidden;
+ padding:1px;
+ border:1px solid #999;
+}
+.thumb1-lists_img img{
+  width: 100px;
+  height: 150px;
+}
+.thumb1-lists_sel{
+  vertical-align: -3px;
+}
+.thumb1-lists_info{
+   cursor: pointer;
+  background-color: #333;
+  color: #fff;
+  height: 28px;
+  line-height: 28px;
+  margin-top: 1px;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+
+}
+/*模板页列表编辑*/
 .model_page_bx{padding:0 10px 10px 10px;}
 .model_page_bx .label_tip
 {

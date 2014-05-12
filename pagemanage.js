@@ -1052,7 +1052,7 @@ $(function () {
 		M.edit_sites();
 		$(window).resize(function () { M.re_height(); M.main_navi.ifs_tab(M.ifrs_index); });
 
-		$("#add_page").dialog({ autoOpen: false, position: 'center', width: 350 }); //新建页面弹框
+		$("#add_page").dialog({ autoOpen: false, position: 'center', width: 850 }); //新建页面弹框
 		$("#delete_page").dialog({ autoOpen: false, position: 'center', width: 350 }); //删除页面弹框
 		$("#site_editing").dialog({ autoOpen: false, position: 'center', width: 350 }); //编辑站点弹框
 		$("#delete_site").dialog({ autoOpen: false, position: 'center', width: 350 }); //删除站点弹框
@@ -1074,6 +1074,34 @@ $(function () {
 				Tools.DeletePageTemplate(Tools.GetParamSiteId(window.location), "zh", alias);
 				$(this).parents("tr").remove();
 			});
+		}
+
+		if(M.app_page){//通用系统模板和当前站点模板选择展示
+			// 加载模拟数据
+			$.mockjaxSettings.responseTime = 100; 
+			 $.mockjax({//通用系统模板类别数据
+		        url: '/catestyle',
+		        proxy: '/Content/testdata/systempage/catestyle.txt'
+		    }); 
+			 $.mockjax({//通用系统模板页面数据
+		        url: '/page',
+		        proxy: '/Content/testdata/systempage/page.txt'
+		    });
+		    $.ajax({
+		        url: '/page',
+		        dataType: 'json',
+		        success: function(json) {
+					var list=json.list;
+					$("#js-syspages-thumb").setTemplateElement("js-syspage-template");
+					$("#js-syspages-thumb").processTemplate(list);
+		        }
+		    });
+			// 加载模拟数据end
+			function pageThumbRadio(event){//选择radiobutton
+				$("#js-syspages-thumb").find(".thumb1-lists_sel").prop("checked",false);
+				$(this).find(".thumb1-lists_sel").prop("checked",true);
+			}
+			$("#js-syspages-thumb").on("click",".thumb1-lists_info",pageThumbRadio);
 		}
 
 		$(".sub_navi").find(".add_1").click(function () {//点击添加页面
