@@ -35,7 +35,7 @@ $(function () {
 			if (M.isMobile == 10) {
 				$(".js-mkcondi").html('手<br/>机<br/>版');
 			}
-			$(".js-mkcondi").animate({ left: -22 }, 1500, 'easeOutBounce');
+			//$(".js-mkcondi").animate({ left: -22 }, 1500, 'easeOutBounce');
 		}
 
 
@@ -1098,10 +1098,12 @@ $(function () {
 		    });
 			// 加载模拟数据end
 			function pageThumbRadio(event){//选择radiobutton
+				$(".thumb1-lists_cell").removeClass("thumb1-lists--active");
 				$("#js-syspages-thumb").find(".thumb1-lists_sel").prop("checked",false);
 				$(this).find(".thumb1-lists_sel").prop("checked",true);
+				$(this).addClass("thumb1-lists--active");
 			}
-			$("#js-syspages-thumb").on("click",".thumb1-lists_info",pageThumbRadio);
+			$("#js-syspages-thumb").on("click",".thumb1-lists_cell",pageThumbRadio);
 		}
 
 		$(".sub_navi").find(".add_1").click(function () {//点击添加页面

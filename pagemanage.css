@@ -344,8 +344,8 @@ a {
 /*codition tip*/
 .condi-tip{
   position: absolute;
-  top: 75px;
-  left:-500px;
+  top: 20px;
+  left:-22px;
   width:20px;
   text-align: center;
   border:1px solid #fff;
@@ -353,7 +353,6 @@ a {
   padding:10px 0;
   color:#efefef;
   font-family: "Microsoft Yahei";
-  display: none;
 }
 .mob3d-img{
   position:absolute;
@@ -1062,6 +1061,7 @@ vertical-align:middle;
 /*left IM box*/
 #leftIMbx
 {
+  z-index: 5;
   position:absolute;
   right:-204px;
   width:200px;
@@ -1456,7 +1456,10 @@ vertical-align:middle;
  margin:0 10px 10px 0;
  overflow: hidden;
  padding:1px;
- border:1px solid #999;
+ border:2px solid #999;
+}
+.thumb1-lists--active{
+  border: 2px solid #ff592c;
 }
 .thumb1-lists_img img{
   width: 100px;
@@ -2135,4 +2138,5 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b2b2b2', end
   width: 960px;
   margin: auto;
   padding: 20px 0 10px;
+  position: relative;
 }

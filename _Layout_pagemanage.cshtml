@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>@ViewBag.Title</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<link href="@Url.Content("~/Content/css/ui-lightness/jquery.ui.all.css")@(Assemble.Controllers.BaseController.VersionFlag)" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/css/index.css")@(Assemble.Controllers.BaseController.VersionFlag)" rel="stylesheet" type="text/css" />
+	@*<link href="@Url.Content("~/Content/css/plugin.css")" rel="stylesheet" type="text/css" />*@
+	<link href="@Url.Content("~/Content/css/factory.css")@(Assemble.Controllers.BaseController.VersionFlag)" class="factory" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/css/pagination.css")@(Assemble.Controllers.BaseController.VersionFlag)"  rel="stylesheet" type="text/css" />
+	@*<link href="@Url.Content("~/Scripts/kindeditor/themes/default/default.css")" rel="stylesheet" type="text/css" />*@
+	<script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")@(Assemble.Controllers.BaseController.VersionFlag)" type="text/javascript"></script>
+	@*<script src="@Url.Content("~/Scripts/kindeditor/kindeditor.js")" type="text/javascript"></script>*@
+	<script src="@Url.Content("~/Scripts/jquery.validate.js")@(Assemble.Controllers.BaseController.VersionFlag)" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/jquery.ui.position.js")@(Assemble.Controllers.BaseController.VersionFlag)" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/jquery_easing.js")@(Assemble.Controllers.BaseController.VersionFlag)" type="text/javascript"></script>
+	@*<script src="@Url.Content("~/Scripts/jquery.flexslider-min.js")" type="text/javascript"></script>*@
+	<script src="@Url.Content("~/Scripts/tools.js")@(Assemble.Controllers.BaseController.VersionFlag)" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/factory.js")@(Assemble.Controllers.BaseController.VersionFlag)" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/jquery.pagination.js")@(Assemble.Controllers.BaseController.VersionFlag)" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/PageCommon.js")@(Assemble.Controllers.BaseController.VersionFlag)" type="text/javascript"></script>
+	@*<script src="@Url.Content("~/Scripts/jquery.treeview.js")" type="text/javascript"></script>*@
+	<script src="@Url.Content("~/Scripts/swfobject_modified.js")@(Assemble.Controllers.BaseController.VersionFlag)" type="text/javascript"></script>
+	<link href="@Url.Content("~/Content/css/pagemanage.css")@(Assemble.Controllers.BaseController.VersionFlag)" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/css/jquery.lightbox-0.5.css")@(Assemble.Controllers.BaseController.VersionFlag)" rel="stylesheet" type="text/css" />
+	<script src="@Url.Content("~/Scripts/jquery.lightbox-0.5.js")@(Assemble.Controllers.BaseController.VersionFlag)" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/pagemanage.js")@(Assemble.Controllers.BaseController.VersionFlag)" type="text/javascript"></script>
+	<link rel="shortcut icon" href="@Url.Content("~/Content/site.ico")" type="image/x-icon" />
+</head>
+<body>
+	<div id="processTip">
+		<div class="pro_wrap">
+			<span class="text">上传成功</span>
+			<iframe class="ui_forflash_iframe" src="about:blank" frameborder="0"></iframe>
+		</div>
+	</div>
+	<div id="header">
+		<div class="header_wrap">
+			<input type="hidden" id="hid_session_currentlanguage" value="@SiteCloud.Web.UserSession.UserLogin.GetUserSession().CurrentLanguage" />
+			<div class="logo">
+				<img src="/content/images/logo.png" alt="" /></div>
+			<select class="hdselects_word_verson">
+				
+			</select>
+			<div class="main_nav">
+				<ul class="main_nav_box clearfix">
+					<li><a href="#">页面管理</a></li>
+					<li><a href="#">资源文件管理</a></li>
+					<li><a href="/home/chooseapp">应用系统选择</a></li>
+				</ul>
+			</div>
+			@Html.Partial("manageruser")
+		</div>
+	</div>
+	@RenderBody()
+</body>
+</html>
