@@ -1800,7 +1800,8 @@ color:#444!important;
 /*页面管理3Tab-ifrs-wraper*/
 .ifrs-wraper{
   overflow: hidden;
-  widows: 100%;
+  width: 100%;
+  display: none;
 }
 .ifrs-wraper_inner,.ifrs-wraper_cell{
   height: 100%;
@@ -2128,7 +2129,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b2b2b2', end
 /*pages-acts 页面操作*/
 #pages-acts{
   position: absolute;
-  top:-100%;
+  top:-200%;
   width: 100%;
   left: 0;
   background: #eee;

@@ -5,17 +5,18 @@ $(function () {
 		M.ifrs_index=0;
 		M.ifrs_cell_w=0;
 		M.app_page=$(".js-iframe-loading").size();
+		M.initW_H=true;//初始化化3个内容区宽度高度
 
 		M.re_height = function () {//左侧导航和展示栏高度自适应
 			var rest_h = $("#header").outerHeight(),
 				w_h = $(window).height(),
 				w_w = $(window).width(),
-				fac_bar_h=$('.js-fac-bar').outerHeight();
-			if (M.app_page) {
+				fac_bar_h=51;
+			if (M.app_page) {//页面管理
 				$("#side_bar").css("height", w_h - 40 - rest_h - fac_bar_h);
 				$("#main_content").css("height", w_h - 30 - rest_h - fac_bar_h);
 			}
-			else{
+			else{//其它两个tab
 				$("#side_bar").css("height", w_h - 40 - rest_h);
 				$("#main_content").css("height", w_h - 30 - rest_h);
 			}
@@ -25,7 +26,11 @@ $(function () {
 			$(".js-ifrs").css("height", w_h-rest_h);
 			$(".js-ifrs-cell").css("width", w_w);
 			$(".js-ifrs-inner").css("width", w_w*3+100);
-			$(".js-js-ifrs-iframe1,.js-js-ifrs-iframe2").css("height", w_h-rest_h-fac_bar_h);
+			$(".js-js-ifrs-iframe1,.js-js-ifrs-iframe2,.js-js-ifrs-iframe0").css("height", w_h-rest_h-fac_bar_h);
+			if(M.initW_H){
+				$(".js-ifrs").show();
+				M.initW_H=false;
+			}
 		};
 		M.re_height();
 
@@ -123,12 +128,18 @@ $(function () {
 			$(".js-ifrs-inner").animate({"marginLeft":-(index*M.ifrs_cell_w)},300,function(){
 				M.all_mainavis.removeClass("current");
 				$('.main_nav_box a:eq('+index+')').addClass("current");
+				if(index==0){
+					$("#leftIMbx").css("visibility", "hidden");
+				}
+				else{
+					$("#leftIMbx").css("visibility", "visible");
+				}
 				if(target_src){
-					var iframe_target=$('.js-js-ifrs-iframe'+index)
+					var iframe_target=$('.js-js-ifrs-iframe'+index);
 					M.iframe_loader.show();
 					iframe_target.off("load");
 					iframe_target.on("load",function(){
-						M.iframe_loader.hide()
+						M.iframe_loader.hide();
 					});
 					iframe_target.attr("src",target_src);
 				}
@@ -143,6 +154,20 @@ $(function () {
 				$(".js-back-ifr1").click(function(event){
 					event.preventDefault();
 					M.main_navi.ifs_tab(0);
+				});
+				$('.js-refresh-ifr1').click(function(event){//刷新制作页面
+					event.preventDefault();
+					if(!M.iframe1Init){//初始化后刷新才有用
+						var iframe2 = document.getElementById("js-ifrs-iframe1"),
+							iframeDoc = $(iframe2),
+							origin_src=iframeDoc.attr("src");
+							M.iframe_loader.show();
+							iframeDoc.off("load");
+							iframeDoc.on("load",function(){
+								M.iframe_loader.hide()
+							});
+						iframeDoc.attr("src","").attr("src",origin_src);
+					}
 				});
 				$('.js-refresh-ifr2').click(function(event){
 					event.preventDefault();
@@ -237,6 +262,11 @@ $(function () {
 
 
 		/*tab1 操作栏按钮事件*/
+		M.pageIframe=(function(){
+			var iframe = document.getElementById("js-ifrs-iframe1"),
+				iframeDoc = ( iframe.contentWindow || iframe.contentDocument );//访问函数
+				return iframeDoc;
+		})();
 		//页面-操作
 		M.acts_pages=(function(){
 			var state=0,
@@ -244,10 +274,12 @@ $(function () {
 			function show(){
 				act_btn.addClass("fabtn-active1");
 				$(".js-pages-acts").animate({"top":51},300);
+				state=1;
 			};
 			function hide(){
 				act_btn.removeClass("fabtn-active1");
 				$(".js-pages-acts").animate({"top":"-100%"},300);
+				state=0;
 			}
 			function init(){
 				act_btn.click(function(event){
@@ -262,12 +294,55 @@ $(function () {
 					}
 
 				});
+				act_btn.trigger("click");
 			}
 			return {
-				init:init
+				init:init,
+				show:show,
+				hide:hide
 			}
 		})();
-		M.acts_pages.init();
+		//初始化化所有按钮组事件
+		M.modbtn_act_init=function(){
+			//新建组件
+			$(".js-snewmod").click(function(event){
+				M.pageIframe.event_do.add_mod_action.call(this,event);
+			});
+			//全局组件
+			$(".js-globalmod").click(function(event){
+				M.pageIframe.event_do.add_sharmd_action.call(this,event);
+			});
+			//复用组件
+			$(".js-reusemod").click(function(event){
+				M.pageIframe.event_do.add_copylibmod_action.call(this,event);
+			});
+			//添加图片btn
+			$(".js-addimage").click(function(event){
+				M.pageIframe.event_do.add_imglib_action.call(this,event);
+			});
+			//添加flash btn
+			$(".js-addflash").click(function(event){
+				M.pageIframe.event_do.add_flashlb_action.call(this,event);
+			});
+			//全局样式
+			$(".js-globalstyles").click(function(event){
+				M.pageIframe.event_do.editor_gloabl_sheet.call(this,event);
+			});
+			//预览
+			$(".js-previewpage").toggle(function(event){
+					M.pageIframe.event_do.preview_show_action.call(this,event);
+				},function(event){
+					M.pageIframe.event_do.preview_hide_action.call(this,event);
+				});
+			//保存页面
+			$(".js-savepage").click(function(event){
+				M.pageIframe.event_do.save_page_action.call(this,event);
+			});
+		};
+		if(M.app_page){
+			M.acts_pages.init();
+		}
+		
 
 
 
@@ -353,9 +428,40 @@ $(function () {
 					$(".links_wrap").find("a:eq(0)").trigger('click');
 				}
 			}
+			M.cre_link_editpage();
 			M.page_check_act();
 			M.set_modpage_act();
 		};
+
+		M.iframe1Init=true;//初始化iframe1，页面制作主体
+		M.nowEditingPage=null;//当前编辑的页面
+		M.cre_link_editpage=function(){//点击右侧铅笔图标加载需要编辑的页面
+			$('.cre_link').click( function(event) {//点击图标加载iframe0
+				event.preventDefault();
+				var iframe_target=$('.js-js-ifrs-iframe0'),
+					target_src=$(this).attr('href');
+					M.iframe_loader.show();
+					iframe_target.off("load");
+					iframe_target.on("load",function(){
+						M.iframe_loader.hide();
+						M.acts_pages.hide();
+						if(M.iframe1Init){
+							M.iframe1Init=false;
+							M.modbtn_act_init();
+						}
+					});
+					if(target_src===M.nowEditingPage){
+						M.iframe_loader.hide();	
+						M.acts_pages.hide();
+					}
+					else{
+						M.nowEditingPage=target_src;
+						iframe_target.attr("src",target_src);
+					}
+			});
+			
+		};
+
 		M.page_check_act = function () {//页面签入签出操作
 			var site_id = Tools.GetParamSiteId(window.location);
 			$(".checkpg_btn").each(function () {
@@ -1595,8 +1701,6 @@ $(function () {
 			var _that = $(this);
 			_that.find('.ltIMlist').html(IMlist);
 			//_that.xjf_posFixed({ top_gap: 160 });
-
-			_that.css("visibility", "visible");
 		});
 		$("#leftIMbx").xjf_posFixed({ top_gap: 160 });
 		$(window).scroll(function () {
