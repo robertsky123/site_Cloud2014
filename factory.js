@@ -119,6 +119,7 @@ $(document).ready(function () {
 
 		e.state = "mading"; /*默认制作模式*/
 		/*判断是签出还是签入模式*/
+		e.parentWindow=window.parent;//父级页面
 		e.make_page_model = function () {
 			var tmp = window.location.search.split('=');
 			if (tmp.length == 5) {
@@ -130,10 +131,16 @@ $(document).ready(function () {
 					$('.act_bar').hide();
 					e.readermodel = 1;
 					$('.for_create').css("visibility", "visible");
+					if(e.parentWindow.admin_js){
+						e.parentWindow.admin_js.forbidBtnActs1.inactive();//禁用操作按钮
+					}
 				}
 				else {
 					$('.for_create').css("visibility", "visible");
 					$('#manu_act_tools').css("visibility", "visible");
+					if(e.parentWindow.admin_js){
+						e.parentWindow.admin_js.forbidBtnActs1.active();//启用操作按钮
+					}
 				}
 			}
 		};
@@ -297,28 +304,28 @@ $(document).ready(function () {
 		};
 		$(".prview").toggle(e.preview_show_action,e.preview_hide_action);
 		/*显示隐藏宽度编辑按钮*/
-		$(".edit_col_width").click(
-            function (event) {
-            	event.preventDefault();
-            	if ($(".for_create").hasClass("set_width")) {
-					$("body").removeClass("framemodel_set");
-            		$(".for_create").removeClass("set_width");
-            		$(".zoom_mover").css("visibility", "visible");
-					$(".js-faceditcol-acts").hide();//隐藏子操作栏
-					$(".factory-addframe").dialog("close");
-            		$(this).text("编辑框架");
-            		e.editing_structure = false;
-            	}
-            	else {
-            		e.editing_structure = true;		
-            		$("body").addClass("framemodel_set");
-            		$(".for_create").addClass("set_width");
-            		$(".zoom_mover").css("visibility", "hidden");
-					$(".js-faceditcol-acts").show();//显示子操作栏
-            		$(this).text("取消编辑");
-            	}
-            }
-        );
+		e.edit_cols_action=function (event) {
+        	event.preventDefault();
+        	if ($(".for_create").hasClass("set_width")) {
+				$("body").removeClass("framemodel_set");
+        		$(".for_create").removeClass("set_width");
+        		$(".zoom_mover").css("visibility", "visible");
+				$(".js-faceditcol-acts").hide();//隐藏子操作栏
+				$(".factory-addframe").dialog("close");
+				$(".sgbar_wrap").hide();
+        		//$(this).text("编辑框架");
+        		e.editing_structure = false;
+        	}
+        	else {
+        		e.editing_structure = true;		
+        		$("body").addClass("framemodel_set");
+        		$(".for_create").addClass("set_width");
+        		$(".zoom_mover").css("visibility", "hidden");
+				$(".js-faceditcol-acts").show();//显示子操作栏
+        		//$(this).text("取消编辑");
+        	}
+        };
+		$(".edit_col_width").click(e.edit_cols_action);
 
 		$("#model_story").dialog({
 			autoOpen: false, position: 'top', width: 600,
@@ -996,10 +1003,11 @@ $(document).ready(function () {
 		/*添加子框架相关操作*/
 		//弹框
 		$("#factory-addframe").dialog({ autoOpen: false, position: 'middle',resizable:false, width: 900 ,create: function( event, ui ) {e.subframe_draggble();}}); //初始添加子框架弹框
-		$(".js-faceditcol-addsubframe").click(function(event){//工具栏添加子框架按钮
+		e.openSubframeAction=function(event){//工具栏添加子框架按钮
 			event.preventDefault();
 			$("#factory-addframe").dialog("open");
-		});
+		};
+		$(".js-faceditcol-addsubframe").click(e.openSubframeAction);
 		//添加新的子框架
 		e.newSubFrameArray=[];
 		$(".js-addnewframe").click(function(event){
@@ -2655,11 +2663,17 @@ $(document).ready(function () {
 
 
 		if ($("#manu_act_tools").size()) {
-			if (!e.readermodel) {
-				window.onbeforeunload = function () { return "请确保您已经保存了当前页面，再关闭窗口。"; };
+			if (!e.readermodel) {//关闭页面时给出提示
+				parentWindow=window.parent;
+				window.onbeforeunload = function () {
+					setTimeout(function () {
+						parentWindow.admin_js.iframe_loader.hide();
+				        alert('你选择留在此页面');
+				    }, 1000);
+					return "请确保您已经保存了当前页面，再关闭窗口。";
+				 };
 			}
 		}
 	})(event_do);
-
 
 });

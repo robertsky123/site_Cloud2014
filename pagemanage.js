@@ -198,7 +198,9 @@ $(function () {
 				init:init
 			};
 		})();
-		M.simplebar.init();
+		if(M.app_page){
+			M.simplebar.init();
+		}
 		/*初始化透明加载进度花*/
 		M.png24_spinner=(function(){
 			var spinner_target,
@@ -260,87 +262,146 @@ $(function () {
 			}
 		})();
 
+		if(M.app_page){
+			/*tab1 操作栏按钮事件*/
+			M.pageIframe=(function(){
+				var iframe = document.getElementById("js-ifrs-iframe1"),
+					iframeDoc = ( iframe.contentWindow || iframe.contentDocument );//访问函数
+					return iframeDoc;
+			})();
+			//页面-操作
+			M.acts_pages=(function(){
+				var state=0,
+					act_btn=$(".js-edit-pages");
+				function show(){
+					act_btn.addClass("fabtn-active1");
+					$(".js-pages-acts").animate({"top":51},300);
+					state=1;
+				};
+				function hide(){
+					act_btn.removeClass("fabtn-active1");
+					$(".js-pages-acts").animate({"top":"-100%"},300);
+					state=0;
+				}
+				function init(){
+					act_btn.click(function(event){
+						event.preventDefault();
+						if(!state){
+							state=1;
+							show();
+						}
+						else{
+							state=0;
+							hide();
+						}
 
-		/*tab1 操作栏按钮事件*/
-		M.pageIframe=(function(){
-			var iframe = document.getElementById("js-ifrs-iframe1"),
-				iframeDoc = ( iframe.contentWindow || iframe.contentDocument );//访问函数
-				return iframeDoc;
-		})();
-		//页面-操作
-		M.acts_pages=(function(){
-			var state=0,
-				act_btn=$(".js-edit-pages");
-			function show(){
-				act_btn.addClass("fabtn-active1");
-				$(".js-pages-acts").animate({"top":51},300);
-				state=1;
-			};
-			function hide(){
-				act_btn.removeClass("fabtn-active1");
-				$(".js-pages-acts").animate({"top":"-100%"},300);
-				state=0;
-			}
-			function init(){
-				act_btn.click(function(event){
-					event.preventDefault();
-					if(!state){
-						state=1;
-						show();
+					});
+					act_btn.trigger("click");
+				}
+				return {
+					init:init,
+					show:show,
+					hide:hide
+				}
+			})();
+			//初始化化所有按钮组事件
+			M.modbtn_act_init=function(){
+				//新建组件
+				$(".js-snewmod").click(function(event){
+					M.pageIframe.event_do.add_mod_action.call(this,event);
+				});
+				//全局组件
+				$(".js-globalmod").click(function(event){
+					M.pageIframe.event_do.add_sharmd_action.call(this,event);
+				});
+				//复用组件
+				$(".js-reusemod").click(function(event){
+					M.pageIframe.event_do.add_copylibmod_action.call(this,event);
+				});
+				//添加图片btn
+				$(".js-addimage").click(function(event){
+					M.pageIframe.event_do.add_imglib_action.call(this,event);
+				});
+				//添加flash btn
+				$(".js-addflash").click(function(event){
+					M.pageIframe.event_do.add_flashlb_action.call(this,event);
+				});
+				//框架
+				M.frameActState=0;//当前框架按钮状态
+				$(".js-addframes").click(function(event){
+					if(!M.frameActState){
+						M.frameActState=1;
+						$(this).addClass("fabtn-active1");
+						$(this).parent(".fabtn-group").addClass("fabtn-group--active1");
 					}
 					else{
-						state=0;
-						hide();
+						M.frameActState=0;
+						$(this).removeClass("fabtn-active1");
+						$(this).parent(".fabtn-group").removeClass("fabtn-group--active1");
 					}
-
+					M.pageIframe.event_do.edit_cols_action.call(this,event);
 				});
-				act_btn.trigger("click");
-			}
-			return {
-				init:init,
-				show:show,
-				hide:hide
-			}
-		})();
-		//初始化化所有按钮组事件
-		M.modbtn_act_init=function(){
-			//新建组件
-			$(".js-snewmod").click(function(event){
-				M.pageIframe.event_do.add_mod_action.call(this,event);
-			});
-			//全局组件
-			$(".js-globalmod").click(function(event){
-				M.pageIframe.event_do.add_sharmd_action.call(this,event);
-			});
-			//复用组件
-			$(".js-reusemod").click(function(event){
-				M.pageIframe.event_do.add_copylibmod_action.call(this,event);
-			});
-			//添加图片btn
-			$(".js-addimage").click(function(event){
-				M.pageIframe.event_do.add_imglib_action.call(this,event);
-			});
-			//添加flash btn
-			$(".js-addflash").click(function(event){
-				M.pageIframe.event_do.add_flashlb_action.call(this,event);
-			});
-			//全局样式
-			$(".js-globalstyles").click(function(event){
-				M.pageIframe.event_do.editor_gloabl_sheet.call(this,event);
-			});
-			//预览
-			$(".js-previewpage").toggle(function(event){
-					M.pageIframe.event_do.preview_show_action.call(this,event);
-				},function(event){
-					M.pageIframe.event_do.preview_hide_action.call(this,event);
+				//添加子框架
+				$(".js-addsubframes").click(function(event){
+					M.pageIframe.event_do.openSubframeAction.call(this,event);
 				});
-			//保存页面
-			$(".js-savepage").click(function(event){
-				M.pageIframe.event_do.save_page_action.call(this,event);
-			});
-		};
-		if(M.app_page){
+				//全局样式
+				$(".js-globalstyles").click(function(event){
+					M.pageIframe.event_do.editor_gloabl_sheet.call(this,event);
+				});
+				//预览
+				$(".js-previewpage").toggle(function(event){
+						M.pageIframe.event_do.preview_show_action.call(this,event);
+						$(".factory-bar_shulter").data("prevew",1);//显示shulter
+						$(".factory-bar_shulter").addClass("factory-bar_shulter--preview");
+						$(this).addClass("fabtn-green-active");
+						if(M.frameActState){
+							M.frameActState=0;
+							$(".js-addframes").removeClass("fabtn-active1");
+							$(".js-addframes").parent(".fabtn-group").removeClass("fabtn-group--active1");
+						}
+					},function(event){
+						M.pageIframe.event_do.preview_hide_action.call(this,event);
+						$(".factory-bar_shulter").data("prevew",0);//隐藏shulter
+						$(".factory-bar_shulter").removeClass("factory-bar_shulter--preview");
+						$(this).removeClass("fabtn-green-active");
+					});
+				//保存页面
+				$(".js-savepage").click(function(event){
+					M.pageIframe.event_do.save_page_action.call(this,event);
+				});
+			};
 			M.acts_pages.init();
+
+			/*处于未迁出状态时*/
+			M.forbidBtnActs1=(function(){//未签出状态下按钮不可点击
+				var bar_shulter=$(".factory-bar_shulter");
+				function inactive(){
+					bar_shulter.addClass("factory-bar_shulter--nocheckout");
+					bar_shulter.data("checkout",0);	
+				}
+				function active(){
+					bar_shulter.removeClass("factory-bar_shulter--nocheckout");	
+					bar_shulter.data("checkout",1);	
+				}
+				function initAction(){//初始化点击不可用状态时的操作
+					bar_shulter.click(function(event){
+						event.preventDefault();
+						if(!$(this).data("checkout")){//处于未迁出状态
+							event_do.poptip_output("当前页面未签出，操作不可用", 'fail');
+						}
+						else if($(this).data("prevew")){//处于预览状态
+							event_do.poptip_output("处于预览状态，操作不可用", 'fail');
+						}
+					});
+				}
+				return {
+					'inactive':inactive,
+					'active':active,
+					'initAction':initAction
+				}
+			})();
+			M.forbidBtnActs1.initAction();
 		}
 		
 
@@ -434,7 +495,7 @@ $(function () {
 		};
 
 		M.iframe1Init=true;//初始化iframe1，页面制作主体
-		M.nowEditingPage=null;//当前编辑的页面
+		//M.nowEditingPage=null;//当前编辑的页面
 		M.cre_link_editpage=function(){//点击右侧铅笔图标加载需要编辑的页面
 			$('.cre_link').click( function(event) {//点击图标加载iframe0
 				event.preventDefault();
@@ -450,14 +511,8 @@ $(function () {
 							M.modbtn_act_init();
 						}
 					});
-					if(target_src===M.nowEditingPage){
-						M.iframe_loader.hide();	
-						M.acts_pages.hide();
-					}
-					else{
-						M.nowEditingPage=target_src;
-						iframe_target.attr("src",target_src);
-					}
+				
+					iframe_target.attr("src",target_src);
 			});
 			
 		};
@@ -1395,9 +1450,11 @@ $(function () {
 				}
 				return i;
 			};
+
 			M.update_list = function (obj, num, type) {
-				var list_str = "", detail_str = "";
+				var list_str = "";
 				for (var key in obj) {
+					var detail_str = "";
 					var name = obj[key].Name;
 					var detail_array = obj[key].Content;
 					for (var i = 0, length = detail_array.length; i < length; i++) {
